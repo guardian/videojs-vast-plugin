@@ -93,28 +93,38 @@ describe('videojs.vast plugin', function() {
 
     describe("createSourceObjects", function() {
 
-      it("should return objects with 'src', 'type', 'width', and 'height' properties", function() {
+      it("should return objects with 'src', 'type', 'width', 'height', 'apiFramework', 'bitrate' and 'adParameters properties'", function() {
         player.vast({ url: 'balhbahblhab' });
         var media_files = [
           {
             fileURL: "TRL",
             mimeType: "video/webm",
             width: 640,
-            height: 360
+            height: 360,
+            apiFramework: "example framework",
+            bitrate: 800
           },
           {
             fileURL: "BuddhaForRill",
             mimeType: "video/mp4",
             width: 0,
-            height: 0
+            height: 0,
+            apiFramework: "vpaid",
+            bitrate: 800
           }
-        ];
-        var sources = player.vast.createSourceObjects(media_files);
+        ],
+        creative = {
+            mediaFiles: media_files,
+            adParameters: "test ad parameter"
+        };
+        var sources = player.vast.createSourceObjects(creative);
         for (var s in sources) {
           expect(sources[s].src).toBeDefined();
           expect(sources[s].type).toBeDefined();
           expect(sources[s].width).toBeDefined();
           expect(sources[s].height).toBeDefined();
+          expect(sources[s].apiFramework).toBeDefined();
+          expect(sources[s].bitrate).toBeDefined();
         }
       });
     });
